@@ -45,7 +45,7 @@ const getSnippet = async (req, res, next) => {
 };
 
 const createSnippet = async (req, res, next) => {
-  const { title, description, code, language, tags } = req.body;
+  const { title, description, code, language, postedBy, tags } = req.body;
 
   // TODO: Validate Input
 
@@ -55,6 +55,7 @@ const createSnippet = async (req, res, next) => {
       description,
       code,
       language,
+      postedBy,
       tags,
     });
 
@@ -69,7 +70,7 @@ const createSnippet = async (req, res, next) => {
 
 const updateSnippet = async (req, res, next) => {
   const { id } = req.params;
-  const { title, description, code, language, tags } = req.body;
+  const { title, description, code, language, postedBy, tags } = req.body;
 
   // TODO: Validate Input
 
@@ -90,6 +91,7 @@ const updateSnippet = async (req, res, next) => {
       description,
       code,
       language,
+      postedBy,
       tags,
       _id: id,
     };

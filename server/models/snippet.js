@@ -1,28 +1,31 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema.Types;
 
 const snippetSchema = mongoose.Schema(
   {
     title: {
       type: String,
-      require: true,
+      required: true,
     },
 
     description: String,
 
     code: {
       type: String,
-      require: true,
+      required: true,
     },
 
     language: {
       type: String,
-      require: true,
+      required: true,
     },
 
-    // postedBy: {
-    //   type: ObjectId,
-    //   ref: 'User',
-    // },
+    postedBy: {
+      // type: String,
+      type: ObjectId,
+      ref: "User",
+      required: true,
+    },
 
     tags: [String],
   },

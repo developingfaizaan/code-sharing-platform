@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const snippetRoutes = require("./routes/snippet");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/snippet", snippetRoutes);
+app.use("/auth", authRoutes);
 
 // Error Handling Middlewares
 app.use(notFound);
