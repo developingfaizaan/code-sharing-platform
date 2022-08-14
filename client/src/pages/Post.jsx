@@ -1,9 +1,27 @@
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+import { fetchSnippet } from "../api";
 import { Button, PostCard } from "../components";
 
 const PostPage = () => {
+  const { id } = useParams();
+  const [snippet, setSnippet] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await fetchSnippet(id);
+      setSnippet(data.snippet);
+    })();
+  }, []);
+
+  if (!id) {
+    return <h1>No Snippet Available</h1>;
+  }
+
   return (
     <main className={`w-full max-w-4xl my-20 mx-auto px-5 md:px-12 sm:px-32`}>
-      <PostCard />
+      <PostCard snippet={snippet} key={snippet._id} />
 
       <aside className="flex justify-between">
         <div className="mt-1 w-96 flex rounded-md border border-black300">

@@ -1,6 +1,9 @@
 import { Avatar } from "./";
 
-const PostCard = () => {
+const PostCard = ({ snippet }) => {
+  const { title, description, code, language } = snippet;
+  // console.log(snippet);
+
   return (
     <article className="mb-16 border-b pb-10 border-black200">
       <header className="flex justify-between">
@@ -48,22 +51,19 @@ const PostCard = () => {
         </div>
       </header>
 
-      <h3 className="text-xl mt-10 mb-3 font-medium">
-        Stripe snippet to accept payments!
-      </h3>
+      <h3 className="text-xl mt-10 mb-3 font-medium">{title}</h3>
 
-      <p className="mb-8 text-white700">
-        Stripe is a suite of APIs powering online payment processing and
-        commerce solutions for internet businesses of all sizes. Accept payments
-        and scale faster.
-      </p>
+      <p className="mb-8 text-white700">{description}</p>
 
-      <code className="h-96 overflow-scroll bg-black200">
-        position: sticky; z-index: 10; top: 0; backdrop-filter: saturate(180%)
-        blur(20px); position: sticky; z-index: 10; top: 0; backdrop-filter:
-        saturate(180%) blur(20px); position: sticky; z-index: 10; top: 0;
-        backdrop-filter: saturate(180%) blur(20px);
-      </code>
+      <div className="w-full h-80 no-scrollbar overflow-scroll bg-black200 p-8 rounded-md">
+        <pre>
+          <code
+            className={`h-96 overflow-scroll bg-black200 language-${language}`}
+          >
+            {code}
+          </code>
+        </pre>
+      </div>
     </article>
   );
 };
