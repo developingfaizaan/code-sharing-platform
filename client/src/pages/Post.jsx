@@ -2,7 +2,7 @@ import { Button, PostCard } from "../components";
 
 const PostPage = () => {
   return (
-    <main className={`w-full max-w-4xl m-auto px-5 md:px-12 sm:px-32`}>
+    <main className={`w-full max-w-4xl my-20 mx-auto px-5 md:px-12 sm:px-32`}>
       <PostCard />
 
       <aside className="flex justify-between">

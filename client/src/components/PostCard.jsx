@@ -2,7 +2,7 @@ import { Avatar } from "./";
 
 const PostCard = () => {
   return (
-    <article className="my-16 border-b pb-10 border-black200">
+    <article className="mb-16 border-b pb-10 border-black200">
       <header className="flex justify-between">
         <Avatar />
         <div className="flex gap-10 text-white700">
