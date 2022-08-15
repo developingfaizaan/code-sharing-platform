@@ -1,8 +1,15 @@
+import { useEffect } from "react";
+import Prism from "prismjs";
+
+import "../prism.css";
 import { Avatar } from "./";
 
 const PostCard = ({ snippet }) => {
   const { title, description, code, language } = snippet;
-  // console.log(snippet);
+
+  useEffect(() => {
+    Prism.highlightAll();
+  }, []);
 
   return (
     <article className="mb-16 border-b pb-10 border-black200">
@@ -55,13 +62,9 @@ const PostCard = ({ snippet }) => {
 
       <p className="mb-8 text-white700">{description}</p>
 
-      <div className="w-full h-80 no-scrollbar overflow-scroll bg-black200 p-8 rounded-md">
+      <div className="w-full h-max max-h-80 no-scrollbar overflow-scroll bg-black200 px-6 py-1 rounded-md">
         <pre>
-          <code
-            className={`h-96 overflow-scroll bg-black200 language-${language}`}
-          >
-            {code}
-          </code>
+          <code className={`language-${language}`}>{code}</code>
         </pre>
       </div>
     </article>
