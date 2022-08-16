@@ -39,7 +39,14 @@ const signup = async (req, res, next) => {
       { expiresIn: "1h" }
     );
 
-    res.status(201).json({ token });
+    res.status(201).json({
+      user: {
+        id: savedUser._id,
+        name: savedUser.name,
+        email: savedUser.email,
+      },
+      token,
+    });
   } catch (error) {
     next(error);
   }
@@ -81,7 +88,14 @@ const login = async (req, res, next) => {
       { expiresIn: "1h" }
     );
 
-    res.status(201).json({ token });
+    res.status(201).json({
+      user: {
+        id: existingUser._id,
+        name: existingUser.name,
+        email: existingUser.email,
+      },
+      token,
+    });
   } catch (error) {
     next(error);
   }

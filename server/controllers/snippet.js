@@ -4,19 +4,13 @@ const Snippet = require("../models/snippet");
 
 const getSnippets = async (req, res, next) => {
   try {
-    const snippets = await Snippet.find();
+    Snippet.find()
+      .populate("postedBy")
+      .exec(function (err, snippets) {
+        if (err) console.error(err);
 
-    if (snippets.length === 0) {
-      res.status(204).json({
-        error: false,
-        message: "🔍 There are no snippets.",
+        res.json({ error: false, snippets });
       });
-    }
-
-    res.status(200).json({
-      error: false,
-      snippets,
-    });
   } catch (error) {
     next(error);
   }
@@ -31,24 +25,31 @@ const getSnippet = async (req, res, next) => {
       throw new Error(`🔍 No snippet with id: ${id}`);
     }
 
-    const snippet = await Snippet.findById(id);
+    Snippet.findById(id)
+      .populate("postedBy")
+      .exec(function (err, snippet) {
+        if (err) console.error(err);
 
-    if (!snippet) {
-      res.status(404);
-      throw new Error(`🔍 No snippet with id: ${id}`);
-    }
+        if (!snippet)
+          return res.json({
+            error: true,
+            message: `🔍 No snippet with id: ${id}`,
+          });
 
-    res.json({ error: false, snippet });
+        res.json({ error: false, snippet });
+      });
   } catch (error) {
     next(error);
   }
 };
 
 const createSnippet = async (req, res, next) => {
-  const { title, description, code, language, postedBy, tags } = req.body;
+  const { title, description, code, language, postedBy } = req.body;
+
+  // Tags [string to array]
+  const tags = req.body.tags.split(",");
 
   // TODO: Validate Input
-
   try {
     const newSnippet = await Snippet.create({
       title,

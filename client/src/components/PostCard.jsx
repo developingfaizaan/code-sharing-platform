@@ -5,7 +5,13 @@ import "../prism.css";
 import { Avatar } from "./";
 
 const PostCard = ({ snippet }) => {
-  const { title, description, code, language } = snippet;
+  const {
+    title,
+    description,
+    code,
+    language,
+    postedBy: { name, email },
+  } = snippet;
 
   useEffect(() => {
     Prism.highlightAll();
@@ -13,8 +19,8 @@ const PostCard = ({ snippet }) => {
 
   return (
     <article className="mb-16 border-b pb-10 border-black200">
-      <header className="flex justify-between">
-        <Avatar />
+      <header className="flex justify-between items-center">
+        <Avatar name={name} email={email} />
         <div className="flex gap-10 text-white700">
           <button href="/" className="flex items-center gap-1">
             <svg

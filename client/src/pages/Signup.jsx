@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { Input, Button, Error } from "../components";
-import { signup } from "../api";
+
+import { useAuth } from "../context/auth";
 
 // TODO: Add Validation
 const Signup = () => {
+  const { signup } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [form, setForm] = useState({
@@ -17,12 +19,11 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await signup(form);
-
-      localStorage.setItem("token", JSON.stringify({ token: data.token }));
+      await signup(form);
 
       navigate("/");
     } catch (error) {
+      console.log(error);
       setError(error.response.data.message);
     }
   };
@@ -57,6 +58,13 @@ const Signup = () => {
 
         <Button type="submit">Create an account</Button>
       </form>
+
+      <p className="text-center my-7">
+        Already have an account?
+        <Link to="/login" className="text-blue-400 font-medium">
+          &nbsp;Log into your account
+        </Link>
+      </p>
     </section>
   );
 };

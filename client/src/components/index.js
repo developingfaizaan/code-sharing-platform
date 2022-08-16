@@ -6,5 +6,16 @@ import PostCard from "./PostCard";
 import Avatar from "./Avatar";
 import Alert from "./Alert";
 import Error from "./Error";
+import ProtectedRoute from "./ProtectedRoute";
 
-export { Button, Input, Textarea, Navbar, PostCard, Avatar, Alert, Error };
+export {
+  Button,
+  Input,
+  Textarea,
+  Navbar,
+  PostCard,
+  Avatar,
+  Alert,
+  Error,
+  ProtectedRoute,
+};
