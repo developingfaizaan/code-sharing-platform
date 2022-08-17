@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "backend-csp",
   "builds": [
     {
       "src": "./index.js",
@@ -9,7 +10,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "/index.js"
     }
   ]
 }
