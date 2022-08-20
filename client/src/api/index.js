@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:1337/" });
+const API = axios.create({
+  baseURL: "https://backend-code-sharing-platform.vercel.app",
+});
 
 // Snippet
 export const fetchSnippets = () => API.get("/snippet");
