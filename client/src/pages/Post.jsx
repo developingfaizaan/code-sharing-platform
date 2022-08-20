@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import { fetchSnippet } from "../api";
 import { Button, PostCard } from "../components";
+import copyToClipboard from "../utils/copyToClipboard";
 
 const PostPage = () => {
   const { id } = useParams();
@@ -80,7 +81,10 @@ const PostPage = () => {
               </button>
             </div>
             <div className="flex flex-col sm:flex-row gap-2">
-              <Button styles="bg-black200 hover:bg-black300 focus:outline-black300">
+              <Button
+                styles="bg-black200 hover:bg-black300 focus:outline-black300"
+                onClick={() => copyToClipboard(snippet.code)}
+              >
                 <div className="flex items-center gap-1 justify-center">
                   <svg
                     width="20"
