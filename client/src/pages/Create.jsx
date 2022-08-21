@@ -1,30 +1,58 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { Input, Button, Textarea, Error } from "../components";
-import { createSnippet } from "../api";
+import { createSnippet, updateSnippet } from "../api";
 
-const CreatePage = () => {
-  const [snippet, setSnippet] = useState({
-    title: "",
-    description: "",
-    language: "",
-    tags: "",
-    code: "",
-    postedBy: JSON.parse(localStorage.getItem("auth")).user.id,
-  });
+const initialValues = {
+  title: "",
+  description: "",
+  language: "",
+  tags: "",
+  code: "",
+  postedBy: JSON.parse(localStorage.getItem("auth")).user.id,
+};
+
+const CreatePage = ({ formValues = initialValues }) => {
+  const [snippet, setSnippet] = useState(formValues);
   const [error, setError] = useState("");
+  const [isUpdating, setisUpdating] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state) {
+      setisUpdating(true);
+
+      const { title, description, language, tags, code } = location.state;
+      setSnippet({
+        title,
+        description,
+        language,
+        tags,
+        code,
+        postedBy: JSON.parse(localStorage.getItem("auth")).user.id,
+      });
+    }
+  }, [location.state]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const { data } = await createSnippet(snippet);
+      if (isUpdating) {
+        const { data } = await updateSnippet(location.state._id, snippet);
 
-      if (data.error) {
-        return setError(data.message);
+        if (data.error) {
+          return setError(data.message);
+        }
+      } else {
+        const { data } = await createSnippet(snippet);
+        if (data.error) {
+          return setError(data.message);
+        }
       }
+
       navigate("/");
     } catch (error) {
       setError(error.response.data.message);
@@ -73,7 +101,9 @@ const CreatePage = () => {
           value={snippet.code}
           onChange={(e) => setSnippet({ ...snippet, code: e.target.value })}
         />
-        <Button type="submit">Create a Snippet</Button>
+        <Button type="submit">
+          {isUpdating ? "Update the Snippet" : "Create a Snippet"}
+        </Button>
       </form>
     </main>
   );
