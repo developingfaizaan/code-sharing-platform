@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const Snippet = require("../models/snippet");
+const User = require("../models/auth");
 
 const getSnippets = async (req, res, next) => {
   try {
@@ -131,10 +132,39 @@ const deleteSnippet = async (req, res, next) => {
   }
 };
 
+const profileSnippets = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(404);
+      throw new Error(`🔍 No user with id: ${id}`);
+    }
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      res.status(404);
+      throw new Error(`🔍 No user with id: ${id}`);
+    }
+
+    Snippet.find({ postedBy: id })
+      .populate("postedBy")
+      .exec(function (err, snippets) {
+        if (err) console.error(err);
+
+        res.json({ error: false, snippets, user });
+      });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getSnippets,
   getSnippet,
   createSnippet,
   updateSnippet,
   deleteSnippet,
+  profileSnippets,
 };

@@ -1,7 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AuthProvider from "./context/auth";
-import { HomePage, CreatePage, PostPage, Signup, Login } from "./pages";
+import {
+  HomePage,
+  CreatePage,
+  PostPage,
+  ProfilePage,
+  Signup,
+  Login,
+} from "./pages";
 import { Navbar, ProtectedRoute } from "./components";
 
 const App = () => {
@@ -20,6 +27,7 @@ const App = () => {
             }
           />
           <Route path="/snippet/:id" element={<PostPage />} />
+          <Route path="/user/:id" element={<ProfilePage />} />
           {/* AUTH */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />

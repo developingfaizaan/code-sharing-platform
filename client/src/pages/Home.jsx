@@ -29,9 +29,7 @@ const HomePage = () => {
 
       {snippets &&
         snippets.map((snippet) => (
-          <Link to={`/snippet/${snippet._id}`} key={snippet._id}>
-            <PostCard snippet={snippet} />
-          </Link>
+          <PostCard snippet={snippet} key={snippet._id} />
         ))}
     </main>
   );

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import Prism from "prismjs";
 
 import "../prism.css";
@@ -6,11 +7,12 @@ import { Avatar } from "./";
 
 const PostCard = ({ snippet }) => {
   const {
+    _id: snippetId,
     title,
     description,
     code,
     language,
-    postedBy: { name, email },
+    postedBy: { name, email, _id: userId },
   } = snippet;
 
   useEffect(() => {
@@ -20,7 +22,10 @@ const PostCard = ({ snippet }) => {
   return (
     <article className="mb-16 border-b pb-10 border-black200">
       <header className="flex justify-between items-center">
-        <Avatar name={name} email={email} />
+        <Link to={`/user/${userId}`}>
+          <Avatar name={name} email={email} />
+        </Link>
+
         <div className="flex gap-10 text-white700">
           <button href="/" className="flex items-center gap-1">
             <svg
@@ -64,15 +69,17 @@ const PostCard = ({ snippet }) => {
         </div>
       </header>
 
-      <h3 className="text-xl mt-10 mb-3 font-medium">{title}</h3>
+      <Link to={`/snippet/${snippet._id}`}>
+        <h3 className="text-xl mt-10 mb-3 font-medium">{title}</h3>
 
-      <p className="mb-8 text-white700">{description}</p>
+        <p className="mb-8 text-white700">{description}</p>
 
-      <div className="w-full h-max max-h-80 no-scrollbar overflow-scroll bg-black200 px-6 py-1 rounded-md">
-        <pre>
-          <code className={`language-${language}`}>{code}</code>
-        </pre>
-      </div>
+        <div className="w-full h-max max-h-80 no-scrollbar overflow-scroll bg-black200 px-6 py-1 rounded-md">
+          <pre>
+            <code className={`language-${language}`}>{code}</code>
+          </pre>
+        </div>
+      </Link>
     </article>
   );
 };
