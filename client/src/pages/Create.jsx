@@ -4,17 +4,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Input, Button, Textarea, Error } from "../components";
 import { createSnippet, updateSnippet } from "../api";
 
-const initialValues = {
-  title: "",
-  description: "",
-  language: "",
-  tags: "",
-  code: "",
-  postedBy: JSON.parse(localStorage.getItem("auth")).user.id,
-};
-
-const CreatePage = ({ formValues = initialValues }) => {
-  const [snippet, setSnippet] = useState(formValues);
+const CreatePage = () => {
+  const [snippet, setSnippet] = useState({
+    title: "",
+    description: "",
+    language: "",
+    tags: "",
+    code: "",
+    postedBy: JSON.parse(localStorage.getItem("auth")).user.id,
+  });
   const [error, setError] = useState("");
   const [isUpdating, setisUpdating] = useState(false);
   const navigate = useNavigate();

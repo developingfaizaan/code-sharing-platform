@@ -98,7 +98,9 @@ const PostCard = ({ snippet }) => {
           </button>
 
           {/* ONLY SHOWS DELETE BUTTTON WHEN ON PROFILE PAGE & POST DETAIL PAGE */}
-          {userId === user.user.id &&
+
+          {user &&
+          userId === user.user.id &&
           (location.pathname.startsWith("/user") ||
             location.pathname.startsWith("/snippet")) ? (
             <>
