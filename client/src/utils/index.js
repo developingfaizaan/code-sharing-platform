@@ -1,4 +1,7 @@
-export const nameInitialsGenerator = (name) => {
+import copyToClipboard from "./copyToClipboard";
+import downloadFile from "./downloadFile";
+
+const nameInitialsGenerator = (name) => {
   let rgx = new RegExp(/(\p{L}{1})\p{L}+/, "gu");
 
   let initials = [...name.matchAll(rgx)] || [];
@@ -9,3 +12,5 @@ export const nameInitialsGenerator = (name) => {
 
   return initials;
 };
+
+export { copyToClipboard, downloadFile, nameInitialsGenerator };

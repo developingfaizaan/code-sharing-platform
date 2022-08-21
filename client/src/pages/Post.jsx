@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 import { fetchSnippet } from "../api";
 import { Button, PostCard } from "../components";
-import copyToClipboard from "../utils/copyToClipboard";
+import { copyToClipboard, downloadFile } from "../utils";
 
 const PostPage = () => {
   const { id } = useParams();
@@ -109,7 +109,11 @@ const PostPage = () => {
                   <span className="w-max">Copy Code</span>
                 </div>
               </Button>
-              <Button>
+              <Button
+                onClick={() =>
+                  downloadFile(snippet.code, snippet.language, snippet.tilte)
+                }
+              >
                 <div className="flex items-center gap-1 justify-center">
                   <svg
                     width="20"

@@ -56,6 +56,7 @@ const CreatePage = () => {
         <Input
           label="Language"
           type="text"
+          placeholder="File Extension eg: .html .css .js"
           value={snippet.language}
           onChange={(e) => setSnippet({ ...snippet, language: e.target.value })}
         />
