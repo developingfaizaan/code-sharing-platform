@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 import { fetchSnippet } from "../api";
 import { Button, PostCard } from "../components";
-import { copyToClipboard, downloadFile } from "../utils";
+import { copyToClipboard, downloadFile, rawCodeFile } from "../utils";
 
 const PostPage = () => {
   const { id } = useParams();
@@ -47,36 +47,32 @@ const PostPage = () => {
           <aside className="flex flex-col md:flex-row sm:items-center justify-between">
             <div className="mb-5 md:mb-0 mt-1 w-100 md:w-96 flex rounded-md border border-black300">
               <span className="inline-flex items-center py-3 px-5 rounded-l-md bg-black200 text-white700 whitespace-nowrap">
-                Raw Link
+                Raw Code
               </span>
-
-              <a
-                href="/"
-                className="py-3 px-5 truncate bg-black100 text-sky-400 flex-1"
+              <p
+                onClick={() => rawCodeFile(snippet.code, snippet.title)}
+                className="py-3 px-5 truncate bg-black100 text-sky-400 flex-1 cursor-pointer"
               >
-                binfn.vercel.app/4nt2oiqirsadfsadf
-              </a>
+                Click to view the Code
+              </p>
 
-              <button className="inline-flex justify-center items-center py-3 px-5 bg-black200 cursor-pointer">
+              <button
+                onClick={() => rawCodeFile(snippet.code, snippet.title)}
+                className="inline-flex justify-center items-center py-3 px-5 bg-black200 cursor-pointer"
+              >
                 <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 >
-                  <path
-                    d="M6.6665 3.33332V13.3333C6.6665 13.7754 6.8421 14.1993 7.15466 14.5118C7.46722 14.8244 7.89114 15 8.33317 15H14.9998C15.4419 15 15.8658 14.8244 16.1783 14.5118C16.4909 14.1993 16.6665 13.7754 16.6665 13.3333V6.03499C16.6665 5.81296 16.6221 5.59317 16.5359 5.38853C16.4498 5.18389 16.3236 4.99852 16.1648 4.84332L13.4023 2.14166C13.091 1.8372 12.6728 1.66671 12.2373 1.66666H8.33317C7.89114 1.66666 7.46722 1.84225 7.15466 2.15481C6.8421 2.46737 6.6665 2.8913 6.6665 3.33332V3.33332Z"
-                    stroke="white"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M13.3333 15V16.6666C13.3333 17.1087 13.1577 17.5326 12.8451 17.8452C12.5325 18.1577 12.1086 18.3333 11.6666 18.3333H4.99992C4.55789 18.3333 4.13397 18.1577 3.82141 17.8452C3.50885 17.5326 3.33325 17.1087 3.33325 16.6666V7.49998C3.33325 7.05795 3.50885 6.63403 3.82141 6.32147C4.13397 6.00891 4.55789 5.83331 4.99992 5.83331H6.66659"
-                    stroke="white"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
                 </svg>
               </button>
             </div>

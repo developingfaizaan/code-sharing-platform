@@ -1,5 +1,6 @@
 import copyToClipboard from "./copyToClipboard";
 import downloadFile from "./downloadFile";
+import rawCodeFile from "./rawCodeFile";
 
 const nameInitialsGenerator = (name) => {
   let rgx = new RegExp(/(\p{L}{1})\p{L}+/, "gu");
@@ -13,4 +14,4 @@ const nameInitialsGenerator = (name) => {
   return initials;
 };
 
-export { copyToClipboard, downloadFile, nameInitialsGenerator };
+export { copyToClipboard, downloadFile, nameInitialsGenerator, rawCodeFile };
