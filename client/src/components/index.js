@@ -6,6 +6,7 @@ import PostCard from "./PostCard";
 import Avatar from "./Avatar";
 import Alert from "./Alert";
 import Error from "./Error";
+import Loader from "./Loader";
 import ProtectedRoute from "./ProtectedRoute";
 
 export {
@@ -17,5 +18,6 @@ export {
   Avatar,
   Alert,
   Error,
+  Loader,
   ProtectedRoute,
 };
