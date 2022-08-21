@@ -1,11 +1,16 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Prism from "prismjs";
 
-import "../prism.css";
+import { deleteSnippet } from "../api";
+import { useAuth } from "../context/auth";
 import { Avatar } from "./";
+import "../prism.css";
 
 const PostCard = ({ snippet }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const {
     _id: snippetId,
     title,
@@ -19,15 +24,33 @@ const PostCard = ({ snippet }) => {
     Prism.highlightAll();
   }, []);
 
+  const handleDelete = async () => {
+    const deleteConfirmation = window.confirm(
+      "Are you sure, you want to delete this snippet?"
+    );
+
+    if (!deleteConfirmation) return;
+
+    try {
+      const { data } = await deleteSnippet(snippetId);
+
+      console.log(data.message);
+
+      navigate("/");
+    } catch (error) {
+      console.log(error.response.data.error);
+    }
+  };
+
   return (
     <article className="mb-16 border-b pb-10 border-black200">
       <header className="flex justify-between items-center">
-        <Link to={`/user/${userId}`}>
+        <Link to={`/user/${userId}`} title="Profile Page">
           <Avatar name={name} email={email} />
         </Link>
 
-        <div className="flex gap-10 text-white700">
-          <button href="/" className="flex items-center gap-1">
+        <div className="flex gap-8 text-white700">
+          <button className="flex items-center gap-1" title="Like Snippet">
             <svg
               width="20"
               height="21"
@@ -47,7 +70,10 @@ const PostCard = ({ snippet }) => {
 
             <span className="font-medium">2.1k</span>
           </button>
-          <button href="/" className="hidden sm:flex items-center gap-1">
+          <button
+            className="hidden sm:flex items-center gap-1"
+            title="Share Snippet"
+          >
             <svg
               width="20"
               height="21"
@@ -64,12 +90,39 @@ const PostCard = ({ snippet }) => {
                 fill="#8899A6"
               />
             </svg>
-            <span className="font-medium">3.3k</span>
           </button>
+
+          {/* ONLY SHOWS DELETE BUTTTON WHEN ON PROFILE PAGE & POST DETAIL PAGE */}
+          {userId === user.user.id &&
+          (location.pathname.startsWith("/user") ||
+            location.pathname.startsWith("/snippet")) ? (
+            <button
+              className="hidden sm:flex items-center gap-1"
+              title="Delete Snippet"
+              onClick={handleDelete}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#ef4444"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="3 6 5 6 21 6" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+              </svg>
+            </button>
+          ) : (
+            ""
+          )}
         </div>
       </header>
 
-      <Link to={`/snippet/${snippet._id}`}>
+      <Link to={`/snippet/${snippetId}`}>
         <h3 className="text-xl mt-10 mb-3 font-medium">{title}</h3>
 
         <p className="mb-8 text-white700">{description}</p>

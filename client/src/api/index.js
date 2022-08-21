@@ -5,6 +5,15 @@ const API = axios.create({
   baseURL: "http://localhost:1337",
 });
 
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem("auth")) {
+    req.headers.Authorization = `Bearer ${
+      JSON.parse(localStorage.getItem("auth")).token
+    }`;
+  }
+  return req;
+});
+
 // Snippet
 export const fetchSnippets = () => API.get("/snippet");
 export const fetchSnippet = (id) => API.get(`/snippet/${id}`);

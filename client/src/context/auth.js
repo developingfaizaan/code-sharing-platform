@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.setItem("auth", null);
+    localStorage.removeItem("auth");
     setUser(null);
     navigate("/login");
   };

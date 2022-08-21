@@ -34,6 +34,16 @@ const Navbar = () => {
             >
               Create
             </NavLink>
+
+            <NavLink
+              to={`/user/${user.user.id}`}
+              className="text-white700 hover:text-white ease-out duration-200"
+              style={({ isActive }) =>
+                isActive ? { color: "#FFFFFF" } : undefined
+              }
+            >
+              Profile
+            </NavLink>
             <button
               onClick={logout}
               title="logout"
