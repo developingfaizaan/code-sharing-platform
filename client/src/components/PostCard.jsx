@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Prism from "prismjs";
 
+import "../prism.css";
 import { deleteSnippet } from "../api";
+import { copyToClipboard } from "../utils";
 import { useAuth } from "../context/auth";
 import { Avatar } from "./";
-import "../prism.css";
 
 const PostCard = ({ snippet }) => {
   const location = useLocation();
@@ -78,12 +79,19 @@ const PostCard = ({ snippet }) => {
           <button
             className="hidden sm:flex items-center gap-1"
             title="Share Snippet"
+            onClick={() => {
+              copyToClipboard(
+                `https://code-sharing-platform.vercel.app/snippet/${snippetId}`
+              );
+              alert("Link Copied to Clipboard");
+            }}
           >
             <svg
               width="20"
               height="21"
               viewBox="0 0 20 21"
               fill="none"
+              className="hover:stroke-cyan-500 transition-all"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -157,7 +165,7 @@ const PostCard = ({ snippet }) => {
 
         <p className="mb-8 text-white700">{description}</p>
 
-        <div className="w-full h-max max-h-80 no-scrollbar overflow-scroll bg-black200 px-6 py-1 rounded-md">
+        <div className="w-full h-max max-h-80 no-scrollbar overflow-scroll bg-black200 px-2 sm:px-6 py-1 rounded-md">
           <pre>
             <code className={`language-${language}`}>{code}</code>
           </pre>

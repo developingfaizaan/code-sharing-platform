@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 import { fetchSnippets } from "../api";
 import { PostCard, Loader } from "../components";
