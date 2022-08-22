@@ -4,6 +4,7 @@ import Textarea from "./Textarea";
 import Navbar from "./Navbar";
 import PostCard from "./PostCard";
 import Avatar from "./Avatar";
+import Code from "./Code";
 import Alert from "./Alert";
 import Error from "./Error";
 import Loader from "./Loader";
@@ -16,6 +17,7 @@ export {
   Navbar,
   PostCard,
   Avatar,
+  Code,
   Alert,
   Error,
   Loader,

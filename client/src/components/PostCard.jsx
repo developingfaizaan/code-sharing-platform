@@ -1,12 +1,9 @@
-import { useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import Prism from "prismjs";
 
-import "../prism.css";
 import { deleteSnippet } from "../api";
 import { copyToClipboard } from "../utils";
 import { useAuth } from "../context/auth";
-import { Avatar } from "./";
+import { Avatar, Code } from "./";
 
 const PostCard = ({ snippet }) => {
   const location = useLocation();
@@ -20,10 +17,6 @@ const PostCard = ({ snippet }) => {
     language,
     postedBy: { name, email, _id: userId },
   } = snippet;
-
-  useEffect(() => {
-    Prism.highlightAll();
-  }, []);
 
   const handleDelete = async () => {
     const deleteConfirmation = window.confirm(
@@ -165,11 +158,7 @@ const PostCard = ({ snippet }) => {
 
         <p className="mb-8 text-white700">{description}</p>
 
-        <div className="w-full h-max max-h-80 no-scrollbar overflow-scroll bg-black200 px-2 sm:px-6 py-1 rounded-md">
-          <pre>
-            <code className={`language-${language}`}>{code}</code>
-          </pre>
-        </div>
+        <Code language={language} code={code} />
       </Link>
     </article>
   );
