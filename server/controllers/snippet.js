@@ -47,7 +47,6 @@ const getSnippet = async (req, res, next) => {
 const createSnippet = async (req, res, next) => {
   const { title, description, code, language, postedBy } = req.body;
 
-  // Tags [string to array]
   const tags = req.body.tags.split(",");
 
   // TODO: Validate Input
@@ -61,10 +60,7 @@ const createSnippet = async (req, res, next) => {
       tags,
     });
 
-    res.status(200).json({
-      error: false,
-      post: newSnippet,
-    });
+    res.status(200).json({ error: false, post: newSnippet });
   } catch (error) {
     next(error);
   }

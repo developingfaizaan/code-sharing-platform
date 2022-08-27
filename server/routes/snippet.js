@@ -1,14 +1,6 @@
 const express = require("express");
 
-const {
-  getSnippets,
-  getSnippet,
-  createSnippet,
-  updateSnippet,
-  deleteSnippet,
-  profileSnippets,
-} = require("../controllers/snippet");
-
+const { getSnippets, getSnippet, createSnippet, updateSnippet, deleteSnippet, profileSnippets } = require("../controllers/snippet");
 const auth = require("../middlewares/auth");
 
 const router = express.Router();
