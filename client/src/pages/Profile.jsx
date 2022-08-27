@@ -1,7 +1,7 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import { Button, PostCard } from "../components";
+import { Error, PostCard } from "../components";
 import { profileSnippets } from "../api";
 import { nameInitialsGenerator } from "../utils";
 
@@ -12,26 +12,20 @@ const ProfilePage = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await profileSnippets(id);
-
+    profileSnippets(id)
+      .then(({ data }) => {
         setUser(data.user);
 
         if (!data.snippets) return setError(data.message);
-        if (data.snippets.length === 0)
-          return setError("No snippet posted by this user");
+        
+        if (data.snippets.length === 0) return setError("No snippet posted by this user");
 
         setSnippets(data.snippets.reverse());
-      } catch (error) {
-        setError(error.response.data.message);
-      }
-    })();
+      })
+      .catch((error) => setError(error.response.data.message))
   }, [id]);
 
-  if (!id) {
-    return <h1>No User with that id</h1>;
-  }
+  if (!id) return <h1>No user with that ID</h1>;
 
   return (
     <main className={`w-full max-w-4xl my-20 mx-auto px-5 md:px-12 sm:px-32`}>
@@ -50,21 +44,9 @@ const ProfilePage = () => {
         </figure>
       )}
 
-      {error && (
-        <>
-          <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-8 sm:mb-14">
-            {error}
-          </h1>
-          <Link to="/">
-            <Button>Go to Home Page</Button>
-          </Link>
-        </>
-      )}
+      {error && <Error message={error} />}
 
-      {snippets &&
-        snippets.map((snippet) => (
-          <PostCard snippet={snippet} key={snippet._id} />
-        ))}
+      {snippets && snippets.map((snippet) => <PostCard snippet={snippet} key={snippet._id} />)}
     </main>
   );
 };

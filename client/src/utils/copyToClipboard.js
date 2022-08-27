@@ -27,8 +27,10 @@ const copyToClipboard = (text) => {
     fallbackCopyTextToClipboard(text);
     return;
   }
+
   navigator.clipboard.writeText(text).then(
     function () {
+      alert("Copied to clipboard!")
       console.log("Async: Copying to clipboard was successful!");
     },
     function (err) {

@@ -1,45 +1,30 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { fetchSnippet } from "../api";
-import { Button, PostCard } from "../components";
+import { Button, Error, PostCard } from "../components";
 import { copyToClipboard, downloadFile, rawCodeFile } from "../utils";
 
 const PostPage = () => {
-  const { id } = useParams();
   const [snippet, setSnippet] = useState(null);
   const [error, setError] = useState();
+  const { id } = useParams();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await fetchSnippet(id);
-
+    fetchSnippet(id)
+      .then(({ data }) => {
         if (!data.snippet) return setError(data.message);
 
         setSnippet(data.snippet);
-      } catch (error) {
-        setError(error.response.data.message);
-      }
-    })();
+      })
+      .catch((error) => setError(error.response.data.message));
   }, [id]);
 
-  if (!id) {
-    return <h1>No Snippet Available</h1>;
-  }
+  if (!id) return <h1>No Snippet Available</h1>
 
   return (
     <main className={`w-full max-w-4xl my-20 mx-auto px-5 md:px-12 sm:px-32`}>
-      {error && (
-        <>
-          <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-8 sm:mb-14">
-            {error}
-          </h1>
-          <Link to="/">
-            <Button>Go to Home Page</Button>
-          </Link>
-        </>
-      )}
+      {error && <Error message={error} />}
 
       {snippet && (
         <>

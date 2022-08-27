@@ -10,16 +10,4 @@ import Error from "./Error";
 import Loader from "./Loader";
 import ProtectedRoute from "./ProtectedRoute";
 
-export {
-  Button,
-  Input,
-  Textarea,
-  Navbar,
-  PostCard,
-  Avatar,
-  Code,
-  Alert,
-  Error,
-  Loader,
-  ProtectedRoute,
-};
+export { Button, Input, Textarea, Navbar, PostCard, Avatar, Code, Alert, Error, Loader, ProtectedRoute };
