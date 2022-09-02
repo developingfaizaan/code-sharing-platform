@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import { logo, logout as logoutIcon } from "../assets";
 
-const generateActiveStyle = ({ isActive }) => isActive && { color: "#FFFFFF" };
+const generateActiveStyle = ({ isActive }) => isActive ? { color: "#FFFFFF" } : {};
 
 const Navbar = () => {
   const { user, logout } = useAuth();
