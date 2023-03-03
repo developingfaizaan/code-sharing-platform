@@ -51,13 +51,7 @@ const createSnippet = async (req, res, next) => {
 
   // TODO: Validate Input
   try {
-    const newSnippet = await Snippet.create({
-      title,
-      description,
-      code,
-      language,
-      postedBy,
-      tags,
+    const newSnippet = await Snippet.create({ title, description, code, language, postedBy, tags,
     });
 
     res.status(200).json({ error: false, post: newSnippet });
@@ -84,14 +78,7 @@ const updateSnippet = async (req, res, next) => {
       throw new Error(`🔍 No snippet with id: ${id}`);
     }
 
-    const updatedSnippet = {
-      title,
-      description,
-      code,
-      language,
-      postedBy,
-      tags,
-      _id: id,
+    const updatedSnippet = { title, description, code, language, postedBy, tags, _id: id,
     };
 
     const newSnippet = await Snippet.findByIdAndUpdate(id, updatedSnippet, {
@@ -128,6 +115,45 @@ const deleteSnippet = async (req, res, next) => {
   }
 };
 
+const likeSnippet = async (req, res, next) => {
+  const { id } = req.params;
+  const { id: userId } = req.body;
+  
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(404);
+      throw new Error(`🔍 No snippet with id: ${id}`);
+    }
+
+    const snippet = await Snippet.findById(id);
+
+    if (!snippet) {
+      res.status(404);
+      throw new Error(`🔍 No snippet with id: ${id}`);
+    }
+
+    const index = snippet.likes.findIndex((id) => id === String(req.userId));
+
+    if (index === -1) snippet.likes.push(req.userId);
+    else snippet.likes = snippet.likes.filter((id) => id !== String(req.userId));
+
+    const updatedSnippet = await Snippet.findByIdAndUpdate(id, snippet, { new: true });
+
+    res.status(200).json(updatedSnippet);
+
+
+  } catch (error) {
+      next(error);
+  }
+};
+
+
+const commentSnippet = async (req, res, next) => {
+   try {}
+   catch (error) {}
+}
+
+
 const profileSnippets = async (req, res, next) => {
   const { id } = req.params;
 
@@ -162,5 +188,7 @@ module.exports = {
   createSnippet,
   updateSnippet,
   deleteSnippet,
+  likeSnippet,
+  commentSnippet,
   profileSnippets,
 };

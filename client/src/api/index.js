@@ -19,6 +19,8 @@ export const fetchSnippet = (id) => API.get(`/snippet/${id}`);
 export const createSnippet = (newSnippet) => API.post(`/snippet`, newSnippet);
 export const updateSnippet = (id, updatedSnippet) => API.patch(`/snippet/${id}`, updatedSnippet);
 export const deleteSnippet = (id) => API.delete(`/snippet/${id}`);
+export const likeSnippet = (id) => API.patch(`/snippet/${id}/like`);
+export const commentSnippet = (id) => API.patch(`/snippet/${id}/comment`);
 
 // Profile
 export const profileSnippets = (id) => API.get(`/snippet/user/${id}`);

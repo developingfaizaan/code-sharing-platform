@@ -1,17 +1,21 @@
+import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import { deleteSnippet } from "../api";
 import { copyToClipboard } from "../utils";
 import { useAuth } from "../context/auth";
 import { Avatar, Code } from "./";
+import { likeSnippet } from "../api";
 
-import { copy, edit, remove } from '../assets'
+import { like as likeIcon, liked as likedIcon, copy, edit, remove } from '../assets'
 
 const URL = "https://code-sharing-platform.vercel.app";
 
 const PostCard = ({ snippet }) => {
-  const { _id: snippetId, title, description, code, language, postedBy: { name, email, _id: userId } } = snippet;
+  const { _id: snippetId, title, description, code, language, postedBy: { name, email, _id: userId }, likes } = snippet;
   const { user } = useAuth();
+  const [like, setLike] = useState(likes.some(id => id === user?.user?.id));
+  const [likeCount, setLikeCount] = useState(likes.length);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -31,6 +35,14 @@ const PostCard = ({ snippet }) => {
 
   const handleEdit = () => navigate("/create", { state: snippet });
 
+  const handleLike = () => {
+    setLike(prev => !prev);
+    likeSnippet(snippetId);
+
+    if (!like) setLikeCount(prev => prev + 1);
+    else setLikeCount(prev => prev - 1);
+  }
+
   return (
     <article className="mb-16 border-b pb-10 border-black200">
       <header className="flex justify-between items-center">
@@ -39,6 +51,9 @@ const PostCard = ({ snippet }) => {
         </Link>
 
         <div className="flex gap-5 sm:gap-8 text-white700">
+          <button className="hidden sm:flex items-center gap-1" title="Like Snippet" onClick={() => handleLike()} >
+            <img src={like ? likedIcon : likeIcon} alt="like" /> {likeCount}
+          </button>
           <button className="hidden sm:flex items-center gap-1" title="Share Snippet" onClick={() => copyToClipboard(`${URL}/snippet/${snippetId}`)} >
             <img src={copy} alt="copy" />
           </button>
