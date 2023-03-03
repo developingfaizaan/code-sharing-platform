@@ -36,6 +36,8 @@ const PostCard = ({ snippet }) => {
   const handleEdit = () => navigate("/create", { state: snippet });
 
   const handleLike = () => {
+    if (!user) return alert("Please login to like a snippet!");
+
     setLike(prev => !prev);
     likeSnippet(snippetId);
 
