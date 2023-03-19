@@ -9,7 +9,7 @@ const Comment = ({comment}) => {
         <Link to={`/user/${userId}`} title="Profile Page">
             <Avatar name={name} email={email} />
         </Link>
-        <blockquote className='mt-5 text-md pb-8 border-b border-black200'>{comment.body}</blockquote>
+        <blockquote className='mt-5 text-md pb-4 border-b border-black200'>{comment.body}</blockquote>
     </div>
   )
 }

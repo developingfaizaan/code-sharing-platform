@@ -29,7 +29,7 @@ const PostPage = () => {
       {snippet && (
         <>
           <PostCard snippet={snippet} />
-          <aside className="flex flex-col md:flex-row sm:items-center justify-between">
+          <aside className="flex flex-col md:flex-row sm:items-center justify-between mb-20">
             <div className="mb-5 md:mb-0 mt-1 w-100 md:w-96 flex rounded-md border border-black300">
               <span className="inline-flex items-center py-3 px-5 rounded-l-md bg-black200 text-white700 whitespace-nowrap">
                 Raw Code
@@ -61,6 +61,7 @@ const PostPage = () => {
           </aside>
 
           <CommentSection snippetId={snippet._id} postedComments={snippet.comments} setCommentAdded={setCommentAdded} />
+          
         </>
       )}
     </main>

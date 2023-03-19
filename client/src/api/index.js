@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  // baseURL: "https://backend-code-sharing-platform.vercel.app",
-  baseURL: "http://localhost:1337",
+  baseURL: "https://backend-code-sharing-platform.vercel.app",
+  // baseURL: "http://localhost:1337",
 });
 
 API.interceptors.request.use((req) => {

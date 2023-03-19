@@ -1,9 +1,12 @@
 import {useState} from 'react';
+
+import { useAuth } from "../context/auth";
 import { Textarea, Comment, Button} from "./";
 import { commentSnippet } from "../api";
 
 const CommentSection = ({ snippetId, postedComments, setCommentAdded }) => {
   const [comment, setComment] = useState("");
+  const { user } = useAuth();
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -25,11 +28,16 @@ const CommentSection = ({ snippetId, postedComments, setCommentAdded }) => {
 
   return (
     <>
-      <form className='mt-14 mb-20 border-t pt-6 border-black200'>
-        <Textarea name="comment" label="Comment" value={comment} onChange={(e) => setComment(e.target.value)} rows={3} />
-        <Button onClick={handleClick}>Post Comment</Button>
-      </form>
+      { user && (    
+        <form className='mt-14 mb-16 border-t pt-6 border-black200'>
+          <Textarea name="comment" label="Comment your thoughts here..." value={comment} onChange={(e) => setComment(e.target.value)} rows={3} />
+          <Button onClick={handleClick}>Post Comment</Button>
+        </form>
+        )
+      }
 
+      
+      <h3 className="text-xl mb-4 font-medium text-white700">Comments</h3>
       {postedComments && postedComments.slice(0).reverse().map((cm, i) => (
         <Comment comment={cm} key={i} />
       ))}
