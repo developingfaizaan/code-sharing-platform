@@ -14,9 +14,12 @@ const Navbar = () => {
         <img src={logo} alt="Logo" />
       </Link>
 
-      <nav className="flex gap-x-10 gap-y-5 py-5 items-center justify-center flex-wrap">
+      <nav className="flex gap-x-8 gap-y-5 py-5 items-center justify-center flex-wrap">
         <NavLink to="/" className="text-white700 hover:text-white ease-out duration-200" style={generateActiveStyle} >
           Home
+        </NavLink>
+        <NavLink to="/search" className="text-white700 hover:text-white ease-out duration-200" style={generateActiveStyle} >
+          Search
         </NavLink>
 
         {user ? (
@@ -42,6 +45,7 @@ const Navbar = () => {
             </NavLink>
           </>
         )}
+
       </nav>
     </header>
   );

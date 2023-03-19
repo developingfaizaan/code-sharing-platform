@@ -1,11 +1,12 @@
 const express = require("express");
 
-const { getSnippets, getSnippet, createSnippet, updateSnippet, deleteSnippet, profileSnippets, likeSnippet, commentSnippet } = require("../controllers/snippet");
+const { getSnippets, getSnippet, searchSnippet, createSnippet, updateSnippet, deleteSnippet, profileSnippets, likeSnippet, commentSnippet } = require("../controllers/snippet");
 const auth = require("../middlewares/auth");
 
 const router = express.Router();
 
 router.get("/", getSnippets);
+router.get("/search", searchSnippet);
 router.get("/:id", getSnippet);
 router.post("/", createSnippet);
 router.patch("/:id", auth, updateSnippet);

@@ -182,9 +182,39 @@ const profileSnippets = async (req, res, next) => {
   }
 };
 
+const searchSnippet = async (req, res, next) => {
+  const query = req.query.searchTerm;
+
+  try {
+
+    const regex = new RegExp(query, "i");
+
+    Snippet.find({
+      $or: [
+        { title: regex },
+        { description: regex },
+        { tags: regex }
+      ]
+    })
+    .populate("postedBy")
+    .exec((err, snippets) => {
+      if (err) {
+        console.error(err);
+        next(err);
+      } else {
+        res.json({ error: false, snippets });
+      }
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getSnippets,
   getSnippet,
+  searchSnippet,
   createSnippet,
   updateSnippet,
   deleteSnippet,

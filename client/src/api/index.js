@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://backend-code-sharing-platform.vercel.app",
-  // baseURL: "http://localhost:1337",
+  // baseURL: "https://backend-code-sharing-platform.vercel.app",
+  baseURL: "http://localhost:1337",
 });
 
 API.interceptors.request.use((req) => {
@@ -19,6 +19,7 @@ export const fetchSnippet = (id) => API.get(`/snippet/${id}`);
 export const createSnippet = (newSnippet) => API.post(`/snippet`, newSnippet);
 export const updateSnippet = (id, updatedSnippet) => API.patch(`/snippet/${id}`, updatedSnippet);
 export const deleteSnippet = (id) => API.delete(`/snippet/${id}`);
+export const searchSnippet = (query) => API.get(`/snippet/search?searchTerm=${query}`);
 export const likeSnippet = (id) => API.patch(`/snippet/${id}/like`);
 export const commentSnippet = (id) => API.patch(`/snippet/${id}/comment`);
 
