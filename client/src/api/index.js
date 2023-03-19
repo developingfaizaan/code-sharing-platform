@@ -21,7 +21,7 @@ export const updateSnippet = (id, updatedSnippet) => API.patch(`/snippet/${id}`,
 export const deleteSnippet = (id) => API.delete(`/snippet/${id}`);
 export const searchSnippet = (query) => API.get(`/snippet/search?searchTerm=${query}`);
 export const likeSnippet = (id) => API.patch(`/snippet/${id}/like`);
-export const commentSnippet = (id) => API.patch(`/snippet/${id}/comment`);
+export const commentSnippet = (id, comment) => API.patch(`/snippet/${id}/comment`, comment);
 
 // Profile
 export const profileSnippets = (id) => API.get(`/snippet/user/${id}`);

@@ -56,7 +56,7 @@ const CreatePage = () => {
         <Input name="description" label="Description" type="text" value={snippet.description} onChange={handleChange} />
         <Input name="language" label="Language" type="text" placeholder="File Extension eg: .html .css .js" value={snippet.language} onChange={handleChange} />
         <Input name="tags" label="Tags" type="text" placeholder="Separated by comma eg: html, css, js" value={snippet.tags} onChange={handleChange} />
-        <Textarea name="code" label="Your Code Snippet" type="text" value={snippet.code} onChange={handleChange} />
+        <Textarea name="code" label="Your Code Snippet" rows={10} value={snippet.code} onChange={handleChange} code />
         <Button type="submit">{isUpdating ? "Update the Snippet" : "Create a Snippet"}</Button>
       </form>
     </main>

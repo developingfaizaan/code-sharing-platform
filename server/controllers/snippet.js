@@ -28,6 +28,7 @@ const getSnippet = async (req, res, next) => {
 
     Snippet.findById(id)
       .populate("postedBy")
+      .populate("comments.postedBy")
       .exec(function (err, snippet) {
         if (err) console.error(err);
 
@@ -117,7 +118,7 @@ const deleteSnippet = async (req, res, next) => {
 
 const likeSnippet = async (req, res, next) => {
   const { id } = req.params;
-  const { id: userId } = req.body;
+  // const { id: userId } = req.body;
   
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -149,8 +150,38 @@ const likeSnippet = async (req, res, next) => {
 
 
 const commentSnippet = async (req, res, next) => {
-   try {}
-   catch (error) {}
+  const { id } = req.params;
+  const { comment } = req.body;
+  
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(404);
+      throw new Error(`🔍 No snippet with id: ${id}`);
+    }
+
+    const snippet = await Snippet.findById(id);
+
+    if (!snippet) {
+      res.status(404);
+      throw new Error(`🔍 No snippet with id: ${id}`);
+    }
+
+    Snippet.findByIdAndUpdate(
+      id,
+      { $push: { comments: { body: comment, postedBy: req.userId } } },
+      (err, snippet) => {
+        if (err) {
+          console.log(err);
+          next(err);
+        } else {
+          // Comment successfully added to post
+         res.status(200).json(snippet);
+        }
+      },
+      );
+  } catch (error) {
+      next(error);
+  }
 }
 
 

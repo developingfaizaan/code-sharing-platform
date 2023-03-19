@@ -9,5 +9,7 @@ import Alert from "./Alert";
 import Error from "./Error";
 import Loader from "./Loader";
 import ProtectedRoute from "./ProtectedRoute";
+import Comment from "./Comment";
+import CommentSection from "./CommentSection";
 
-export { Button, Input, Textarea, Navbar, PostCard, Avatar, Code, Alert, Error, Loader, ProtectedRoute };
+export { Button, Input, Textarea, Navbar, PostCard, Comment, CommentSection, Avatar, Code, Alert, Error, Loader, ProtectedRoute };
