@@ -31,3 +31,15 @@ body {
     scrollbar-width: none; /* Firefox */
   }
 }
+
+input[type="file" i]::-webkit-file-upload-button{
+  background: #282D37;
+  border: 1px solid #282D37;
+  color: #ffffff;
+  border-radius: 4px;
+  margin: .6rem;
+  margin-left: 2.4rem;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}

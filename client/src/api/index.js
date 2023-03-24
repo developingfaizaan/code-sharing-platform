@@ -25,6 +25,7 @@ export const commentSnippet = (id, comment) => API.patch(`/snippet/${id}/comment
 
 // Profile
 export const profileSnippets = (id) => API.get(`/snippet/user/${id}`);
+export const updateProfilePhoto = (id, updatedProfile) => API.patch(`/auth/profile/${id}`, updatedProfile);
 
 // Auth
 export const signup = (data) => API.post("/auth/signup", data);
