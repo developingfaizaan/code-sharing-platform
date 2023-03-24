@@ -15,6 +15,7 @@ const ProfilePage = () => {
   const [snippets, setSnippets] = useState(null);
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
+  const [editError, setEditError] = useState(false);
   const [edit, setEdit] = useState(false);
   const [image, setImage] = useState("");
 
@@ -36,6 +37,9 @@ const ProfilePage = () => {
     const { data: { newUser } } = await updateProfilePhoto(id, { profilePhoto: image });
     
     setEdit(false);
+
+    if(!newUser) return setEditError(true);
+
     setUser({...user, profilePhoto: newUser.profilePhoto });
   };
 
@@ -56,9 +60,12 @@ const ProfilePage = () => {
             )}
 
             { user._id === currentUser?.user?.id && 
-              <img onClick={() => setEdit((prev) => !prev)} className="absolute top-0 right-0 cursor-pointer" src={editIcon} title="Edit Profile Photo" alt="Edit Profile" />
+              <img onClick={() => {setEdit((prev) => !prev); setEditError(false)}} className="absolute top-0 right-0 cursor-pointer" src={editIcon} title="Edit Profile Photo" alt="Edit Profile" />
             }
           </div>
+
+          {editError && <p className="text-center text-red-400">Profile photo not changed! <br /> Please try again later or try a smaller size photo.</p>}
+
 
           { edit && (
             <>

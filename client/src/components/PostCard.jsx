@@ -12,7 +12,7 @@ import { like as likeIcon, liked as likedIcon, copy, edit, remove } from '../ass
 const URL = "https://code-sharing-platform.vercel.app";
 
 const PostCard = ({ snippet }) => {
-  const { _id: snippetId, title, description, code, language, postedBy: { name, email, _id: userId }, likes } = snippet;
+  const { _id: snippetId, title, description, code, language, postedBy: { name, email, _id: userId, profilePhoto }, likes, } = snippet;
   const { user } = useAuth();
   const [like, setLike] = useState(likes.some(id => id === user?.user?.id));
   const [likeCount, setLikeCount] = useState(likes.length);
@@ -49,7 +49,7 @@ const PostCard = ({ snippet }) => {
     <article className="mb-16 border-b pb-10 border-black200">
       <header className="flex justify-between items-center">
         <Link to={`/user/${userId}`} title="Profile Page">
-          <Avatar name={name} email={email} />
+          <Avatar name={name} email={email} profilePhoto={profilePhoto} />
         </Link>
 
         <div className="flex gap-5 sm:gap-8 text-white700">
